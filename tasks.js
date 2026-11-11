@@ -40,43 +40,43 @@ window.TASKS = [
   "region_heads": 75
  },
  {
-  "pair": "287",
+  "pair": "334",
   "view": "tele",
   "dataset": "WikiCrowd",
-  "image": "images/0545.jpg",
-  "photo": "images/287_tele.jpg",
-  "context": "images/287_tele_context.jpg",
+  "image": "images/0635.jpg",
+  "photo": "images/334_tele.jpg",
+  "context": "images/334_tele_context.jpg",
   "offset": [
-   1117,
-   862
+   1000,
+   504
   ],
   "window_size": [
-   2016,
-   1512
+   2000,
+   1332
   ],
   "size": [
-   4032,
-   3024
+   4000,
+   2664
   ],
   "region": [
    [
-    1848.29,
-    1350.88
+    1660.0,
+    830.0
    ],
    [
-    2392.96,
-    1346.7
+    2340.0,
+    830.0
    ],
    [
-    2402.76,
-    1886.97
+    2340.0,
+    1510.0
    ],
    [
-    1859.92,
-    1890.96
+    1660.0,
+    1510.0
    ]
   ],
-  "region_heads": 75
+  "region_heads": null
  },
  {
   "pair": "camera_07_03_2100_LAMISI_EOS_15",
