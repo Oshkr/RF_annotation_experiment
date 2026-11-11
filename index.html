@@ -52,7 +52,7 @@
       <button id="toolErase" class="tool" title="remove the nearest point (E)">✖ Erase</button>
       <button id="toolPan" title="move the image (H); or right-drag / Space+drag">✋ Pan</button>
       <button id="undo" title="undo (Ctrl+Z)">↶ Undo</button>
-      <button id="region" title="zoom to the yellow region (R)">◎ Region</button>
+      <button id="region" title="zoom to the red region (R)">◎ Region</button>
       <button id="fit" title="show the whole photo (F)">⤢ Fit</button>
     </div>
     <div class="group" style="margin-left:auto">
@@ -63,14 +63,14 @@
   <aside>
     <h2>Whole image</h2>
     <canvas id="context"></canvas>
-    <div class="muted">Yellow: region to annotate. Cyan: what the main view shows (click here to jump).</div>
+    <div class="muted">Red: region to annotate. Cyan: what the main view shows (click here to jump).</div>
     <h2>This image</h2>
-    <div><span class="stat" id="count">0</span> heads in the yellow region</div>
+    <div><span class="stat" id="count">0</span> heads in the red region</div>
     <div class="muted" id="outside"></div>
     <h2>Instructions</h2>
     <ul class="muted">
-      <li>One point on <b>every head</b> in the yellow region.</li>
-      <li>Zoom: mouse wheel. Move: right-drag.</li>
+      <li>One point on <b>every head</b> in the red region.</li>
+      <li>Each photo opens zoomed out. Zoom: mouse wheel, or <b>◎ Region</b>. Move: right-drag.</li>
       <li>Next photo: <b>▶</b>.</li>
     </ul>
     <div class="muted">Keys: <kbd>C</kbd> click, <kbd>E</kbd> erase, <kbd>H</kbd> pan, <kbd>R</kbd> region, <kbd>F</kbd> whole photo, <kbd>N</kbd>/<kbd>P</kbd> next/previous, <kbd>Ctrl</kbd>+<kbd>Z</kbd> undo.</div>
@@ -80,8 +80,8 @@
 <div id="welcome" class="page">
   <div class="card">
     <h1>Count the heads 👋</h1>
-    <p><b><span id="nTasks"></span> photos.</b> Put <b>one point on every head</b> inside the <b style="background:#ffd400">yellow region</b>,
-       also tiny ones: zoom in with the mouse wheel.</p>
+    <p><b><span id="nTasks"></span> photos.</b> Put <b>one point on every head</b> inside the <b style="background:#e00000;color:#fff;padding:0 3px">red region</b>,
+       also tiny ones. Each photo first shows the whole view; zoom in with the mouse wheel (or <b>◎ Region</b>).</p>
     <p>When you are done, press <b>Submit</b>: your work is saved automatically.</p>
     <p>Your name (keep it or change it):<br>
        <input id="name" type="text" style="width:220px;margin-top:6px"> <button id="dice" title="new random name">🎲</button></p>
@@ -184,12 +184,13 @@ function draw() {
     ctx.drawImage(im.photo, view.tx + t.offset[0] * view.s, view.ty + t.offset[1] * view.s, t.window_size[0] * view.s, t.window_size[1] * view.s);
   const q = t.region;
   ctx.beginPath(); q.forEach(([x, y], i) => ctx[i ? "lineTo" : "moveTo"](x * view.s + view.tx, y * view.s + view.ty));
-  ctx.closePath(); ctx.strokeStyle = "#ffd400"; ctx.lineWidth = 2; ctx.stroke();
+  ctx.closePath(); ctx.strokeStyle = "rgba(0,0,0,.6)"; ctx.lineWidth = 4; ctx.stroke();
+  ctx.strokeStyle = "#ff1a1a"; ctx.lineWidth = 2; ctx.stroke();
   let n = 0;
   for (const p of pts()) {
     const ok = inside(p, q); n += ok;
     ctx.beginPath(); ctx.arc(p[0] * view.s + view.tx, p[1] * view.s + view.ty, R, 0, 2 * Math.PI);
-    ctx.fillStyle = ok ? "#3ef03e" : "#ff4040"; ctx.fill();
+    ctx.fillStyle = ok ? "#3ef03e" : "#b0b0b0"; ctx.fill();
     ctx.lineWidth = 1; ctx.strokeStyle = "#000"; ctx.stroke();
   }
   $("count").textContent = n;
@@ -205,7 +206,8 @@ function drawContext() {
   cctx.setTransform(1, 0, 0, 1, 0, 0); cctx.clearRect(0, 0, c.width, c.height);
   if (im.context.complete && im.context.naturalWidth) cctx.drawImage(im.context, 0, 0, c.width, c.height);
   cctx.beginPath(); t.region.forEach(([x, y], i) => cctx[i ? "lineTo" : "moveTo"](x * k, y * k)); cctx.closePath();
-  cctx.strokeStyle = "#ffd400"; cctx.lineWidth = 2; cctx.stroke();
+  cctx.strokeStyle = "rgba(0,0,0,.6)"; cctx.lineWidth = 4; cctx.stroke();
+  cctx.strokeStyle = "#ff1a1a"; cctx.lineWidth = 2; cctx.stroke();
   const r = canvas.getBoundingClientRect(), [a, b] = toCrop(0, 0), [e, f] = toCrop(r.width, r.height);
   cctx.strokeStyle = "#00e5ff"; cctx.lineWidth = 1.5;
   cctx.strokeRect(a * k, b * k, (e - a) * k, (f - b) * k);
@@ -275,7 +277,7 @@ function tick() {                                   // add the time since the la
 }
 setInterval(tick, 10000);
 document.addEventListener("visibilitychange", tick);
-function go(i) { tick(); idx = (i + TASKS.length) % TASKS.length; resize(); region(); draw(); }
+function go(i) { tick(); idx = (i + TASKS.length) % TASKS.length; resize(); fit(); draw(); }   // open zoomed out (whole view); R / ◎ Region zooms to the region
 $("toolClick").onclick = () => setTool("click"); $("toolErase").onclick = () => setTool("erase"); $("toolPan").onclick = () => setTool("pan");
 $("undo").onclick = undo; $("fit").onclick = () => { fit(); draw(); }; $("region").onclick = () => { region(); draw(); };
 const next = () => (idx === TASKS.length - 1 ? $("finish").classList.remove("hidden") : go(idx + 1));   // last photo: ask to download
