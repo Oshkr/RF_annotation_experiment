@@ -113,7 +113,6 @@
 <script src="tasks.js"></script>
 <script>
 "use strict";
-const TASKS = window.TASKS || [];
 const KEY = "rf_head_annotation_web_v1";   // points in raw px of the annotated photo, seconds per task
 const ADJ = ["brave","calm","clever","eager","gentle","happy","jolly","kind","lucky","merry","nimble","proud","quick","quiet","sunny","swift","witty","bold","bright","cosy"];
 const ANIMAL = ["otter","falcon","badger","lynx","heron","fox","owl","seal","hare","wolf","panda","koala","robin","bison","gecko","moose","raven","tiger","whale","yak"];
@@ -125,6 +124,22 @@ let store = JSON.parse(localStorage.getItem(KEY) || "null") || { annotator: rand
 const save = () => localStorage.setItem(KEY, JSON.stringify(store));
 let idx = 0, tool = "click", view = { s: 1, tx: 0, ty: 0 }, undos = {}, cache = {};
 store.seconds = store.seconds || {};
+// ---- order: random per annotator, alternating tele / wide (random start), kept in the browser so a reload keeps it
+function shuffle(a) {
+  a = a.slice(); const r = new Uint32Array(a.length); crypto.getRandomValues(r);
+  for (let i = a.length - 1; i > 0; i--) { const j = r[i] % (i + 1); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+function makeOrder(all) {
+  const tele = shuffle(all.filter(t => t.view === "tele")), wide = shuffle(all.filter(t => t.view !== "tele"));
+  const [a, b] = crypto.getRandomValues(new Uint8Array(1))[0] & 1 ? [tele, wide] : [wide, tele], out = [];
+  for (let i = 0; i < Math.max(a.length, b.length); i++) { if (i < a.length) out.push(a[i]); if (i < b.length) out.push(b[i]); }
+  return out;
+}
+const ALL = window.TASKS || [], byId = Object.fromEntries(ALL.map(t => [`${t.pair}:${t.view}`, t]));
+if (!store.order || store.order.length !== ALL.length || !store.order.every(k => byId[k]))
+  store.order = makeOrder(ALL).map(t => `${t.pair}:${t.view}`);
+const TASKS = store.order.map(k => byId[k]);
 let tStart = null;                                  // time spent per task (only while it is shown)
 const $ = id => document.getElementById(id);
 const canvas = $("canvas"), ctx = canvas.getContext("2d"), cctx = $("context").getContext("2d");
@@ -294,11 +309,12 @@ $("start").onclick = () => { setName($("name").value.trim() || randomName()); $(
 $("back").onclick = e => { e.preventDefault(); $("thanks").classList.add("hidden"); go(idx); };
 function payload() {
   const points = [], tasks = [];
-  for (const t of TASKS) {
+  for (const [i, t] of TASKS.entries()) {
     const p = store.points[tid(t)] || [];
     p.forEach(([x, y]) => points.push({ pair: t.pair, view: t.view, image: t.image, x: +x.toFixed(1), y: +y.toFixed(1) }));
     tasks.push({ pair: t.pair, view: t.view, dataset: t.dataset, image: t.image, n_points: p.length,
-                 n_in_region: p.filter(q => inside(q, t.region)).length, seconds: Math.round(store.seconds[tid(t)] || 0) });
+                 n_in_region: p.filter(q => inside(q, t.region)).length, seconds: Math.round(store.seconds[tid(t)] || 0),
+                 position: i + 1 });
   }
   store.submission = store.submission || Math.random().toString(36).slice(2, 10);
   return { submission: store.submission, annotator: store.annotator, submitted: new Date().toISOString(),

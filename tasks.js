@@ -21,20 +21,20 @@ window.TASKS = [
   ],
   "region": [
    [
-    1066.72,
-    1073.01
+    1707.54,
+    900.13
    ],
    [
-    2120.79,
-    1064.31
+    2339.98,
+    894.91
    ],
    [
-    2103.04,
-    2118.87
+    2329.33,
+    1527.64
    ],
    [
-    1054.48,
-    2137.01
+    1700.19,
+    1538.53
    ]
   ],
   "region_heads": 75
@@ -60,20 +60,20 @@ window.TASKS = [
   ],
   "region": [
    [
-    1660.0,
-    830.0
+    1796.0,
+    966.0
    ],
    [
-    2340.0,
-    830.0
+    2204.0,
+    966.0
    ],
    [
-    2340.0,
-    1510.0
+    2204.0,
+    1374.0
    ],
    [
-    1660.0,
-    1510.0
+    1796.0,
+    1374.0
    ]
   ],
   "region_heads": null
@@ -99,20 +99,20 @@ window.TASKS = [
   ],
   "region": [
    [
-    2734.59,
-    1752.61
+    3012.61,
+    1828.51
    ],
    [
-    4109.62,
-    1744.06
+    3837.63,
+    1823.38
    ],
    [
-    4122.33,
-    3128.81
+    3845.25,
+    2654.23
    ],
    [
-    2752.01,
-    3143.95
+    3023.06,
+    2663.31
    ]
   ],
   "region_heads": 75
@@ -138,20 +138,20 @@ window.TASKS = [
   ],
   "region": [
    [
-    4318.4,
-    2103.2
+    4365.18,
+    2099.98
    ],
    [
-    4552.3,
-    2103.2
+    4505.52,
+    2099.98
    ],
    [
-    4552.3,
-    2337.1
+    4505.52,
+    2240.32
    ],
    [
-    4318.4,
-    2337.1
+    4365.18,
+    2240.32
    ]
   ],
   "region_heads": 75
@@ -177,20 +177,20 @@ window.TASKS = [
   ],
   "region": [
    [
-    3091.2,
-    2241.7
+    3135.22,
+    2245.72
    ],
    [
-    3311.3,
-    2241.7
+    3267.28,
+    2245.72
    ],
    [
-    3311.3,
-    2461.8
+    3267.28,
+    2377.78
    ],
    [
-    3091.2,
-    2461.8
+    3135.22,
+    2377.78
    ]
   ],
   "region_heads": 76
@@ -216,22 +216,178 @@ window.TASKS = [
   ],
   "region": [
    [
-    2493.8,
-    1323.9
+    2518.24,
+    1348.34
    ],
    [
-    2616.0,
-    1323.9
+    2591.56,
+    1348.34
    ],
    [
-    2616.0,
-    1446.1
+    2591.56,
+    1421.66
    ],
    [
-    2493.8,
-    1446.1
+    2518.24,
+    1421.66
    ]
   ],
   "region_heads": 75
+ },
+ {
+  "pair": "camera_06_30_2030_EROSFORYOU_EOS_39",
+  "view": "tele",
+  "dataset": "RFCrowd",
+  "image": "camera/06_30_2030_EROSFORYOU_EOS__3F0A4973.JPG",
+  "photo": "images/camera_06_30_2030_EROSFORYOU_EOS_39_tele.jpg",
+  "context": "images/camera_06_30_2030_EROSFORYOU_EOS_39_tele_context.jpg",
+  "offset": [
+   583,
+   547
+  ],
+  "window_size": [
+   3480,
+   2320
+  ],
+  "size": [
+   6960,
+   4640
+  ],
+  "region": [
+   [
+    2123,
+    1797
+   ],
+   [
+    2523,
+    1797
+   ],
+   [
+    2523,
+    2197
+   ],
+   [
+    2123,
+    2197
+   ]
+  ],
+  "region_heads": null
+ },
+ {
+  "pair": "camera_07_01_2045_JADE_ARENA_52",
+  "view": "wide",
+  "dataset": "RFCrowd",
+  "image": "camera/07_01_2045_JADE_ARENA__3F0A6155.JPG",
+  "photo": "images/camera_07_01_2045_JADE_ARENA_52_wide.jpg",
+  "context": "images/camera_07_01_2045_JADE_ARENA_52_wide_context.jpg",
+  "offset": [
+   1919,
+   956
+  ],
+  "window_size": [
+   3480,
+   2320
+  ],
+  "size": [
+   6960,
+   4640
+  ],
+  "region": [
+   [
+    3579,
+    2136
+   ],
+   [
+    3739,
+    2136
+   ],
+   [
+    3739,
+    2296
+   ],
+   [
+    3579,
+    2296
+   ]
+  ],
+  "region_heads": null
+ },
+ {
+  "pair": "camera_07_03_2200_JENNIE_ORANGE_60",
+  "view": "tele",
+  "dataset": "RFCrowd",
+  "image": "camera/07_03_2200_JENNIE_ORANGE__3F0A7701.JPG",
+  "photo": "images/camera_07_03_2200_JENNIE_ORANGE_60_tele.jpg",
+  "context": "images/camera_07_03_2200_JENNIE_ORANGE_60_tele_context.jpg",
+  "offset": [
+   1749,
+   1030
+  ],
+  "window_size": [
+   3480,
+   2320
+  ],
+  "size": [
+   6960,
+   4640
+  ],
+  "region": [
+   [
+    3259,
+    1600
+   ],
+   [
+    3719,
+    1600
+   ],
+   [
+    3719,
+    2060
+   ],
+   [
+    3259,
+    2060
+   ]
+  ],
+  "region_heads": null
+ },
+ {
+  "pair": "279",
+  "view": "wide",
+  "dataset": "WikiCrowd",
+  "image": "images/0531.jpg",
+  "photo": "images/279_wide.jpg",
+  "context": "images/279_wide_context.jpg",
+  "offset": [
+   1024,
+   618
+  ],
+  "window_size": [
+   3024,
+   2012
+  ],
+  "size": [
+   6048,
+   4024
+  ],
+  "region": [
+   [
+    2440,
+    1135
+   ],
+   [
+    2630,
+    1135
+   ],
+   [
+    2630,
+    1325
+   ],
+   [
+    2440,
+    1325
+   ]
+  ],
+  "region_heads": null
  }
 ];
